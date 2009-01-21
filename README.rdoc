@@ -7,17 +7,19 @@
 yamltest lets you configure unit test with yaml documents. Simply define a "yt_parse" method
 that will transform your "src" (source) into a "res" (result).
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
-* Ease of context definition
-* Multiple step testing with different keys
-* tests are only created if a test with the same name does not exist
-* named tests (easy to get information on failed test)
+* Ease of context definition.
+* Multiple step testing with different keys.
+* Tests are only created if a test with the same name does not exist.
+* Named tests (easy to get information on failed tests).
+* If someone asks, I can try to fix my TextMate Bundle that runs the tests (all or one at a time) 
+  from the yaml file and put it online.
 
 == SYNOPSIS:
 
   class TestSomething < Test::Unit::TestCase
-    yamltest :directories => ["/some/path/for/my/tests"]
+    yamltest :directory => 'relative/path/to/yaml/files'
     
     def yt_parse(key, source, context)
       do_something_with(source, context)
