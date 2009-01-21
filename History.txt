@@ -1,0 +1,4 @@
+== yamltest 0.5 2009-01-21
+
+* 1 major improvement
+  * First release after extraction from zena (http://zenadmin.org). [gaspard]
