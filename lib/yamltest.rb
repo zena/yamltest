@@ -5,7 +5,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 module Yamltest
-  VERSION = '0.5'
+  VERSION = '0.5.0'
   module Helper
     def self.included(obj)
       obj.extend Yamltest::ClassMethods
