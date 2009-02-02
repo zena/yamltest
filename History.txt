@@ -2,3 +2,7 @@
 
 * 1 major improvement
   * First release after extraction from zena (http://zenadmin.org). [gaspard]
+
+== yamltest 0.5.1 2009-02-02
+
+* Simplified gem specification (avoid hoe/newgem/etc dependency)

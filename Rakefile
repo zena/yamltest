@@ -1,25 +1,40 @@
-%w[rubygems rake rake/clean fileutils newgem rubigen].each { |f| require f }
-require File.dirname(__FILE__) + '/lib/yamltest'
+require 'rubygems'
+require 'rake/gempackagetask'
+require 'rake/testtask'
 
-# Generate all the Rake tasks
-# Run 'rake -T' to see list of generated tasks (from gem root directory)
-$hoe = Hoe.new('yamltest', Yamltest::VERSION) do |p|
-  p.developer('Gaspard Bucher', 'gaspard@teti.ch')
-  p.changes              = p.paragraphs_of("History.txt", 0..1).join("\n\n")
-  p.rubyforge_name       = p.name
+require 'lib/yamltest/version'
+
+task :default => :test
+
+spec = Gem::Specification.new do |s|
+  s.name             = 'yamltest'
+  s.version          = Yamltest::Version.to_s
+  s.has_rdoc         = true
+  s.extra_rdoc_files = %w(README.rdoc)
+  s.rdoc_options     = %w(--main README.rdoc)
+  s.summary          = "yamltest lets you configure unit test with yaml documents"
+  s.author           = 'Gaspard Bucher'
+  s.email            = 'gaspard@teti.ch'
+  s.homepage         = 'http://github.com/zena/yamltest/tree'
+  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,test}/**/*")
+  # s.executables    = ['yamltest']
   
-  p.extra_dev_deps = [
-    ['newgem', ">= #{::Newgem::VERSION}"]
-  ]
-  
-  p.clean_globs |= %w[**/.DS_Store tmp *.log]
-  path = (p.rubyforge_name == p.name) ? p.rubyforge_name : "\#{p.rubyforge_name}/\#{p.name}"
-  p.remote_rdoc_dir = File.join(path.gsub(/^#{p.rubyforge_name}\/?/,''), 'rdoc')
-  p.rsync_args = '-av --delete --ignore-errors'
+  # s.add_dependency('gem_name', '~> 0.0.1')
 end
 
-require 'newgem/tasks' # load /tasks/*.rake
-Dir['tasks/**/*.rake'].each { |t| load t }
+Rake::GemPackageTask.new(spec) do |pkg|
+  pkg.gem_spec = spec
+end
 
-# TODO - want other tests/tasks run by default? Add them to the list
-# task :default => [:spec, :features]
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.test_files = FileList["test/*_test.rb"]
+  t.verbose = true
+end
+
+desc 'Generate the gemspec to serve this Gem from Github'
+task :github do
+  file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
+  File.open(file, 'w') {|f| f << spec.to_ruby }
+  puts "Created gemspec: #{file}"
+end
