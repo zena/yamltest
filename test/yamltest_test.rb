@@ -28,7 +28,7 @@ class TestDefaultFolder < Test::Unit::TestCase
 end
 
 class TestCustomKeys < Test::Unit::TestCase
-  yamltest :directory => 'zoo'
+  yamltest :directory => 'zoo', :src_from_title => true
   
   def yt_parse(key, source, context)
     res = source.gsub('o', 'a')

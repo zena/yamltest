@@ -5,7 +5,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 module Yamltest
-  VERSION = '0.5.0'
+  VERSION = '0.5.2'
   module Helper
     def self.included(obj)
       obj.extend Yamltest::ClassMethods
@@ -132,7 +132,7 @@ module Yamltest
               default_context = (@@test_strings[file]['default'] || {})['context'] || {}
               context = default_context.merge(context)
             when 'src'
-              @@test_strings[file][test]['src'] || test.gsub('_',' ')
+              @@test_strings[file][test]['src'] #{opts[:src_from_title] != false ? "|| (test.gsub('_',' '))" : ''}
             else
               @@test_strings[file][test][key.to_s]
             end

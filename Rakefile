@@ -32,6 +32,11 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+desc 'Release new gem to rubyforge'
+task :release do
+  puts "rubyforge add_release yamltest yamltest 0.5.2 git/yamltest/pkg/yamltest-0.5.2.gem"
+end
+
 desc 'Generate the gemspec to serve this Gem from Github'
 task :github do
   file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"

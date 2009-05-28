@@ -14,3 +14,7 @@ animal:
   context:
     foo: "bar"
   foo: "bozo"
+
+some_title:
+  len: 10
+  res: "same title"
