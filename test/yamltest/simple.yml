@@ -14,3 +14,7 @@ overwrite_key_replaces_hash:
       login: 'Marc'
   src: "context.inspect"
   res: '{"env" => {"login" => "Marc"}, "one" => 1, "two" => 2}'
+
+"should support spaces in methods":
+  src: "45 + 2"
+  res: 47

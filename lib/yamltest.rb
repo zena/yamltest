@@ -5,7 +5,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 module Yamltest
-  VERSION = '0.5.2'
+  VERSION = '0.5.3'
   module Helper
     def self.included(obj)
       obj.extend Yamltest::ClassMethods
@@ -70,6 +70,11 @@ module Yamltest
     def yamltest(opts = {})
       # We need to do a class_eval so that the class variables 'test_strings, test_methods, ...' are scoped
       # in the final class and are not global to all tests using the YamlTest helper.
+      # TODO: we could use the singleton accessor:
+      # class << self
+      #   attr_accessor test_strings
+      # end
+      # and then use "self.test_strings"
       
       class_eval %Q{
         @@test_strings = {}
@@ -149,7 +154,7 @@ module Yamltest
             unless tests.include?("test_#{tf}_#{test}")
               tests << "test_#{tf}_#{test}"
               class_eval <<-END
-                def test_#{tf}_#{test}
+                def test_#{tf}_#{test.gsub(/[^_a-zA-Z]/, '_')}
                   yt_do_test(#{tf.inspect}, #{test.inspect})
                 end
               END
