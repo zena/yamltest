@@ -1,27 +1,25 @@
 require 'test/unit'
 require 'yaml'
-
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
+require 'yamltest/version'
 
 module Yamltest
-  VERSION = '0.5.3'
+
   module Helper
     def self.included(obj)
       obj.extend Yamltest::ClassMethods
     end
   end
-  
+
   module ClassMethods
-    
+
     # build an array of file_name, file_path, options
     def file_list(caller_path, opts)
       directories = opts[:directories] || [opts[:directory] || :default]
-      
+
       if files = opts[:files]
         files.map!{|f| f.to_s}
       end
-      
+
       directories = directories.map do |dir|
         if dir == :default
           if caller_path.split('/').last =~ /^(.*)_test.rb/ || caller_path.split('/').last =~ /^test_(.*).rb/
@@ -37,7 +35,7 @@ module Yamltest
       end.flatten
 
       file_list = []
-      
+
       directories.each do |dir|
         Dir.foreach(dir) do |f|
           next unless f =~ /^([\w_-]+).yml/
@@ -45,11 +43,11 @@ module Yamltest
           file_list << [$1, File.join(dir, "#{$1}.yml"), opts[$1] || opts[$1.to_sym] || {}]
         end
       end
-      
+
       file_list
     end
-    
-    
+
+
     # Setup yaml testing.
     # usage:
     # class SuperTest < Test::Unit::TestCase
@@ -75,14 +73,14 @@ module Yamltest
       #   attr_accessor test_strings
       # end
       # and then use "self.test_strings"
-      
+
       class_eval %Q{
         @@test_strings = {}
         @@test_methods = {}
         @@test_options = {}
         @@test_files = []
         @@file_list  = file_list(#{caller[0].inspect}, #{opts.inspect})
-        
+
         @@file_list.each do |file_name, file_path, opts|
           strings = {}
           test_methods = []
@@ -98,7 +96,7 @@ module Yamltest
             raise err
           end
           class_eval "
-            def \#{file_name}
+            def \#{file_name}_tests
               @@test_strings['\#{file_name}']
             end
           "
@@ -106,19 +104,19 @@ module Yamltest
           @@test_methods[file_name] = test_methods
           @@test_files << file_name
         end
-        
+
         # Override this in your test class
         def yt_parse(key, source, context)
           source
         end
-        
+
         def yt_do_test(file, test, context = yt_get('context',file,test))
           @@test_strings[file][test].keys.each do |key|
             next if ['src', 'context'].include?(key)
             yt_assert yt_get(key,file,test), yt_parse(key, yt_get('src',file,test), context)
           end
         end
-        
+
         protected
           def yt_assert(test_res, res)
             if test_res.kind_of?(String) && test_res[0..1] == '!/'
@@ -129,7 +127,7 @@ module Yamltest
               assert_equal test_res, res
             end
           end
-          
+
           def yt_get(key, file, test)
             case key
             when 'context', :context
@@ -144,7 +142,7 @@ module Yamltest
           end
       }
     end
-    
+
     def yt_make
       class_eval %q{
         return unless @@test_methods
