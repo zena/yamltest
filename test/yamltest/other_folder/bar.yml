@@ -1,0 +1,7 @@
+default:
+  src: "other_folder_default"
+  res: 20
+
+hello_world:
+  src: "other_folder_hello_world"
+  res: 24

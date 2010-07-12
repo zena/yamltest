@@ -29,10 +29,15 @@ module Yamltest
             directories = [File.dirname(caller_path)]
           end
         else
-          # relative to caller
-          Dir[File.join(File.dirname(caller_path),dir)]
+          # GLOB absolute path
+          list = Dir[dir]
+          if list.empty?
+            # relative to caller
+            list = Dir[File.join(File.dirname(caller_path),dir)]
+          end
+          list
         end
-      end.flatten
+      end.flatten.uniq
 
       file_list = []
 

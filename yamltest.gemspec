@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{yamltest}
-  s.version = "0.6.0"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Gaspard Bucher"]
-  s.date = %q{2010-05-13}
+  s.date = %q{2010-07-12}
   s.description = %q{yamltest lets you configure unit test with yaml documents}
   s.email = %q{gaspard@teti.ch}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "test/gem_test/foo.yml",
      "test/gem_test/simple_test.rb",
      "test/test_helper.rb",
+     "test/yamltest/other_folder/bar.yml",
      "test/yamltest/simple.yml",
      "test/yamltest_test.rb",
      "test/zoo/complicated.yml",
