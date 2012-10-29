@@ -58,7 +58,6 @@ class TestCustomFolder < Test::Unit::TestCase
   yamltest :directory => File.join(File.dirname(__FILE__), 'yamltest', 'other_folder')
 
   def yt_parse(key, source, context)
-    puts source
     case key
     when 'res'
       source.length

@@ -154,7 +154,7 @@ module Yamltest
         tests = self.instance_methods.reject! {|m| !( m =~ /^test_/ )}
         @@test_files.each do |tf|
           @@test_methods[tf].each do |test|
-            unless tests.include?("test_#{tf}_#{test}")
+            unless tests.include?(:"test_#{tf}_#{test}")
               tests << "test_#{tf}_#{test}"
               class_eval <<-END
                 def test_#{tf}_#{test.gsub(/[^_a-zA-Z]/, '_')}
