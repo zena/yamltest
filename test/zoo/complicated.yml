@@ -13,7 +13,8 @@ other_keys:
 animal:
   context:
     foo: "bar"
-  foo: "bozo"
+  foo: "bar" 
+  one: "two"
 
 some_title:
   len: 10
