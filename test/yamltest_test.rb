@@ -39,6 +39,28 @@ class TestCustomKeys < Test::Unit::TestCase
       res.length
     when 'foo'
       context['foo']
+    when 'one'
+      'two'
+    else
+      "bad test key #{key.inspect}"
+    end
+  end
+
+  
+
+  yt_make
+end
+
+class TestCustomTest < Test::Unit::TestCase
+  yamltest :directory => 'zoo', :src_from_title => true
+
+  def yt_parse(key, source, context)
+    res = source.gsub('o', 'a')
+    case key
+    when 'foo'
+      'bar'
+    when 'one'
+      context['one']
     else
       "bad test key #{key.inspect}"
     end
@@ -47,11 +69,10 @@ class TestCustomKeys < Test::Unit::TestCase
   # This test will not be redefined by 'make_tests'
   def test_complicated_animal
     context = yt_get('context', 'complicated', 'animal')
-    context['foo'] = 'bozo'
+    context['one'] = 'two'
     yt_do_test('complicated', 'animal', context)
   end
 
-  yt_make
 end
 
 class TestCustomFolder < Test::Unit::TestCase
