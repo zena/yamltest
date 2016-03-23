@@ -1,24 +1,6 @@
-require 'rubygems'
+
 require 'rake'
-
-require(File.join(File.dirname(__FILE__), 'lib/yamltest/version'))
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.version = Yamltest::VERSION
-    gem.name = "yamltest"
-    gem.summary = %Q{yamltest lets you configure unit test with yaml documents}
-    gem.description = %Q{yamltest lets you configure unit test with yaml documents}
-    gem.email = "gaspard@teti.ch"
-    gem.homepage = "http://github.com/zena/yamltest/tree"
-    gem.authors = ["Gaspard Bucher"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
+require 'bundler/gem_tasks'
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
