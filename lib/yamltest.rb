@@ -43,7 +43,7 @@ module Yamltest
 
       directories.each do |dir|
         Dir.foreach(dir) do |f|
-          next unless f =~ /^([\w_-]+).yml/
+          next unless f =~ /^([\w-]+).yml/
           next if files && !files.include?($1)
           file_list << [$1, File.join(dir, "#{$1}.yml"), opts[$1] || opts[$1.to_sym] || {}]
         end
@@ -90,7 +90,7 @@ module Yamltest
           strings = {}
           test_methods = []
           begin
-            YAML::load_documents( File.open( file_path ) ) do |doc|
+            YAML::load_stream( File.open( file_path ) ) do |doc|
               doc.each do |elem|
                 test_methods << elem[0]
                 strings[elem[0]] = elem[1]
