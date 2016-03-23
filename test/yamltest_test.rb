@@ -19,9 +19,9 @@ class TestDefaultFolder < Test::Unit::TestCase
   end
 
   def test_to_make_sure_tests_are_valid
-    assert (respond_to?('test_simple_default') and
+    assert respond_to?('test_simple_default') and
              (method('test_simple_default').arity == 0 ||
-              method('test_simple_default').arity == -1))
+              method('test_simple_default').arity == -1)
   end
 
   yt_make
@@ -55,7 +55,6 @@ class TestCustomTest < Test::Unit::TestCase
   yamltest :directory => 'zoo', :src_from_title => true
 
   def yt_parse(key, source, context)
-    res = source.gsub('o', 'a')
     case key
     when 'foo'
       'bar'
